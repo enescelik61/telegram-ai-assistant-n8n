@@ -228,7 +228,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const raw = $json.content.parts[0].text;\n\nlet parsed;\ntry {\n  parsed = JSON.parse(raw);\n} catch(e) {\n  const match = raw.match(/\\{[\\s\\S]*\\}/);\n  parsed = JSON.parse(match[0]);\n}\n\nreturn [{ json: parsed }];"
+        "jsCode": "const raw = $json.content.parts[0].text;\n\nlet parsed;\ntry {\n  parsed = JSON.parse(raw);\n} catch(e) {\n  const match = raw.match(/\\{[\\s\\S]*\\}/);\n  parsed = JSON.parse(match[0]);\n}\nif (parsed.type === 'shopping') { parsed = { type: 'note', title: 'Einkaufsliste: ' + (parsed.items || []).join(', ') }; }\nreturn [{ json: parsed }];"
       },
       "name": "Code in JavaScript",
       "type": "n8n-nodes-base.code",
